@@ -5,7 +5,7 @@
   "author": "Victor Quinn <mail@victorquinn.com>",
   "homepage": "http://socialradar.github.io/batch-request",
   "repository": "https://github.com/socialradar/batch-request",
-  "main": "lib/batch-request.js"
+  "main": "lib/batch-request.js",
   "dependencies": {
     "bluebird": "~0.8.0-0"
   },
