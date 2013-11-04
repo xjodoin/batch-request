@@ -1,0 +1,24 @@
+{
+  "name": "batch-request",
+  "description": "Batch Request - Utility library to enable a server to handle batch requests",
+  "version": "0.0.1",
+  "author": "Victor Quinn <mail@victorquinn.com>",
+  "homepage": "http://socialradar.github.io/batch-request",
+  "repository": "https://github.com/socialradar/batch-request",
+  "main": "lib/batch-request.js"
+  "dependencies": {
+    "bluebird": "~0.8.0-0"
+  },
+  "devDependencies": {
+    "chai": "~1.8.0",
+    "chance": "~0.5.1",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-simple-mocha": "~1.13.0",
+    "mocha": "~1.13.0",
+    "supertest": "~0.8.0"
+  },
+  "keywords": ["batch", "request", "http", "utility"]
+}
