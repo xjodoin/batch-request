@@ -16,9 +16,14 @@
     "grunt-cli": "~0.1.9",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-simple-mocha": "~1.13.0",
+    "grunt-simple-mocha": "~0.4.0",
     "mocha": "~1.13.0",
     "supertest": "~0.8.0"
   },
-  "keywords": ["batch", "request", "http", "utility"]
+  "keywords": [
+    "batch",
+    "request",
+    "http",
+    "utility"
+  ]
 }
