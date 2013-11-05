@@ -22,7 +22,6 @@ For example, let's say you have an application with an API and you have 3 differ
 
 It's tempting to write a non-RESTful endpoint /updateDevicesAndSessions or something to make all of these requests in one shot rather than making three pure RESTful calls to update each object. 
 
-However, with **Batch Request** you can maintain the benefits of a cheat like this (only one request to update multiple things) while gaining the benefit of a single request.
-
+However, with **Batch Request** you can maintain the benefits of a cheat like this (only one request to update multiple things) while maintainting REST purity.
 
 Using **Batch Request** you can send a single request which represents many requests and receive the results of all those requests in a single reply.

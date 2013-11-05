@@ -30,6 +30,10 @@ github_url: https://github.com/socialradar/batch-request
   {% assign posts = site.categories.requests %}
   {% include methods_sidebar.html %}
 
+  <a class=toc_title href="#dependencies">Dependencies</a>
+  {% assign posts = site.categories.dependencies %}
+  {% include methods_sidebar.html %}
+
   <a class=toc_title href="#errors">Errors</a>
   {% assign posts = site.categories.errors %}
   {% include methods_sidebar.html %}
@@ -82,6 +86,10 @@ github_url: https://github.com/socialradar/batch-request
 
     <h2 id="requests">Requests</h2>
     {% assign posts = site.categories.requests %}
+    {% include methods_full.html %}
+
+    <h2 id="dependencies">Dependencies</h2>
+    {% assign posts = site.categories.dependencies %}
     {% include methods_full.html %}
 
     <h2 id="errors">Errors</h2>
