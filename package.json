@@ -6,6 +6,9 @@
   "homepage": "http://socialradar.github.io/batch-request",
   "repository": "https://github.com/socialradar/batch-request",
   "main": "lib/batch-request.js",
+  "scripts": {
+    "test": "grunt test"
+  },
   "dependencies": {
     "bluebird": "~0.8.0-0",
     "lodash": "~2.2.1",
