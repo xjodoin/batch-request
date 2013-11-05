@@ -34,11 +34,17 @@ github_url: https://github.com/socialradar/batch-request
   <h1>Batch Request</h1>
 
   <p>
-    <b>Batch Request</b> is a lightweight library which allows clients to send multiple requests in batch. We developed this
-    at <a href="http://www.socialradar.com">SocialRadar</a> particularly for use with mobile devices connecting to Node.js.
+    <b>Batch Request</b> is a lightweight library for <a href="http://nodejs.org">Node.js</a> which allows clients to send multiple requests to a server running Node.js in batch.
+  </p>
+  <p>
+    We developed this at <a href="http://www.socialradar.com">SocialRadar</a> particularly for use with mobile devices connecting to Node.js.
     For mobile devices particularly, spinning the cell modem up is an expensive operation and includes a fair amount of
-    latency (we found an average of around 400ms on LTE!). So we needed a way to be able to send API requests in batch
+    latency (we found an average of around 300ms from an iPhone 5s on LTE!). So we needed a way to be able to send API requests in batch
     from these mobile devices to our API to minimize battery drainage and latency on the client.
+  </p>
+  <p>
+    Using <b> Batch Request</b> you can send a single request which represents many requests and receive the results of all those requests
+    in a single reply.
   </p>
   <p>
     <b>Batch Request</b> is open source software and is released under the
