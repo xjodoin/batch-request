@@ -1,13 +1,13 @@
 {
+  "boss": true,
   "bitwise": true,
-  "browser": true,
   "camelcase": true,
   "curly": true,
+  "eqnull": true,
   "eqeqeq": true,
-  "es5": true,
-  "esnext": true,
+  "expr": true,
   "immed": true,
-  "indent": 2,
+  "indent": 4,
   "latedef": true,
   "newcap": true,
   "noarg": true,
@@ -15,8 +15,11 @@
   "quotmark": "single",
   "regexp": true,
   "smarttabs": true,
-  "strict": true,
+  "sub": true,
   "trailing": true,
   "undef": true,
-  "unused": true
+  "globals": {
+    "describe": true,
+    "it": true
+  }
 }
