@@ -47,5 +47,59 @@ describe('batch', function() {
                     done();
                 });
         });
+        describe('can handle multiple requests', function() {
+            it('without a method', function(done) {
+                request(app)
+                    .post('/batch')
+                    .send({
+                        getName: {
+                            url: 'http://localhost:4000/users/1/name'
+                        },
+                        getEmail: {
+                            url: 'http://localhost:4000/users/1/email'
+                        },
+                        getCompany: {
+                            url: 'http://localhost:4000/users/1/company'
+                        }
+                    })
+                    .expect(200, function(err, res) {
+                        expect(err).to.not.exist;
+                        expect(res.body).to.have.property('getName');
+                        expect(res.body.getName.statusCode).to.equal(200);
+                        expect(res.body.getName.body).to.be.a('string');
+                        expect(res.body.getEmail.statusCode).to.equal(200);
+                        expect(res.body.getEmail.body).to.be.a('string');
+                        expect(res.body.getCompany.statusCode).to.equal(200);
+                        expect(res.body.getCompany.body).to.be.a('string');
+                        done();
+                    });
+            });
+
+            it('one of which is bogus', function(done) {
+                request(app)
+                    .post('/batch')
+                    .send({
+                        getName: {
+                            url: 'http://localhost:4000/users/1/name'
+                        },
+                        getEmail: {
+                            url: 'http://localhost:4000/users/1/' + chance.word()
+                        },
+                        getCompany: {
+                            url: 'http://localhost:4000/users/1/company'
+                        }
+                    })
+                    .expect(200, function(err, res) {
+                        expect(err).to.not.exist;
+                        expect(res.body).to.have.property('getName');
+                        expect(res.body.getName.statusCode).to.equal(200);
+                        expect(res.body.getName.body).to.be.a('string');
+                        expect(res.body.getEmail.statusCode).to.equal(404);
+                        expect(res.body.getCompany.statusCode).to.equal(200);
+                        expect(res.body.getCompany.body).to.be.a('string');
+                        done();
+                    });
+            });
+        });
     });
 });

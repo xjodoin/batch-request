@@ -20,7 +20,7 @@ app.get('/users/:id/email', function(req, res) {
 });
 
 app.get('/users/:id/company', function(req, res) {
-    res.json(chance.capitalze(chance.word()));
+    res.json(chance.capitalize(chance.word()));
 });
 
 app.listen(4000);
