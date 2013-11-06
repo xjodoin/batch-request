@@ -31,8 +31,21 @@ describe('batch', function() {
     });
 
     describe('basic', function() {
-        it('can handle a single request');
-        
+        it('can handle a single request, without a method', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        url: 'http://localhost:4000/users/1/name'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    done();
+                });
+        });
     });
 });
-

@@ -39,4 +39,23 @@ describe('validate', function() {
         it('obeys the localOnly option when set as true');
         it('obeys the httpsOnly option when set as true');
     });
+
+    describe('other validation', function() {
+        it('rejects request with bogus method', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    bogusMethod: {
+                        method: chance.word() + chance.word(),
+                        url: 'http://localhost:4000/users/1/name'
+                    }
+                })
+                .expect(400, function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res.body.error).to.exist;
+                    expect(res.body.error.code).to.equal(110);
+                    done();
+                });
+        });
+    });
 });
