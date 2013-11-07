@@ -11,21 +11,14 @@ A simple library for batching HTTP requests
 
 Download via [NPM](http://npmjs.org)
 
-    npm install --save batch-request
+[![NPM](https://nodei.co/npm/batch-request.png?compact=true)](https://nodei.co/npm/batch-request/)
 
 then in your app
-
-    // Load Batch Request
-    var batch = require('batch-request')(),
-        express = require('express'),
-        app = express.createServer();
 
     // Use Batch Request as middleware on an endpoint you want to service batch requests
     app.get('/batch', batch);
 
-    app.listen(5000);
-    console.log("Server started!");
 
-And you're off!
+And that's it!
 
 See [the website](http://socialradar.github.io/batch-request/) for more detailed usage information and details.
