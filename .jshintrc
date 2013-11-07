@@ -19,6 +19,8 @@
   "trailing": true,
   "undef": true,
   "globals": {
+    "beforeEach": true,
+    "afterEach": true,
     "describe": true,
     "it": true
   }
