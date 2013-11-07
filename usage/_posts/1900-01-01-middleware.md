@@ -14,17 +14,10 @@ then in your app
 
 {% highlight js %}
   // Load Batch Request
-  var batch = require('batch-request')(),
-      express = require('express'),
-      app = express.createServer();
+  var batch = require('batch-request')();
 
   // Use Batch Request as middleware on an endpoint you want to service batch requests
-  app.get('/batch', batch);
-
-  app.listen(5000);
-  console.log("Server started!");
-
+  app.post('/batch', batch);
 {% endhighlight %}
 
-
-
+and that's it! Any POSTs to the `'/batch'` endpoint will be handled by **Batch Request**.

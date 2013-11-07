@@ -13,6 +13,11 @@ the routing line as follows:
 
 And that's it! 
 
+Our validation middleware will run and ensure any request is valid before passing
+it on to **Batch Request**. This validation middleware will even respond directly
+(unless that [option](#options) is disabled of course!)
+
+
 Validation happens by some sanity checks and the [options](#options) specified
 below.
 
