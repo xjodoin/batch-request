@@ -22,3 +22,7 @@ then in your app
 And that's it!
 
 See [the website](http://socialradar.github.io/batch-request/) for more detailed usage information and details.
+
+Developed by:
+
+[![SocialRadar](http://socialradar.github.io/batch-request/social-radar-black-orange.png)](http://socialradar.com)
