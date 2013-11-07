@@ -25,4 +25,4 @@ See [the website](http://socialradar.github.io/batch-request/) for more detailed
 
 Developed by:
 
-[![SocialRadar](http://socialradar.github.io/batch-request/social-radar-black-orange.png)](http://socialradar.com)
+[![SocialRadar](https://raw.github.com/socialradar/batch-request/master/social-radar-black-orange.png)](http://socialradar.com)
