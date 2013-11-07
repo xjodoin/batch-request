@@ -19,9 +19,12 @@ then in your app
     app.get('/batch', batch);
 
 
-And that's it!
+Optionally use our included middleware to validate validity of your batch request
 
-See [the website](http://socialradar.github.io/batch-request/) for more detailed usage information and details.
+    // Include the batch.validate middleware before batch middleware
+    app.get('/batch', batch.validate, batch);
+
+And that's it!
 
 Developed by:
 

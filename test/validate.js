@@ -53,7 +53,25 @@ describe('validate', function() {
                 .expect(400, function(err, res) {
                     expect(err).to.be.null;
                     expect(res.body.error).to.exist;
-                    expect(res.body.error.code).to.equal(110);
+                    expect(res.body.error.type).to.equal('ValidationError');
+                    done();
+                });
+        });
+
+        it('rejects request with bogus url', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    bogusUrl: {
+                        url: chance.word()
+                    }
+                })
+                .expect(400, function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res.body.error).to.exist;
+                    expect(res.body.error.type).to.equal('ValidationError');
+                    expect(res.body.error.message).to.equal('Invalid URL');
+                    expect(res.body.error.request).to.equal('bogusUrl');
                     done();
                 });
         });
