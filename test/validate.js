@@ -2,14 +2,47 @@
 
 process.env.NODE_ENV = 'test';
 
-var Chance = require('chance'),
+var _ = require('lodash'),
+    Chance = require('chance'),
     chance = new Chance(),
     expect = require('chai').expect,
+    methods = require('methods'),
     request = require('supertest');
 
 var app = require('./helpers/app');
 
 var batch = require('../lib/batch-request')();
+
+// Add a Chance mixin for creating a fake batch-request object
+chance.mixin({
+    batchRequest: function(params) {
+        params = params || {};
+        params.size = params.size || chance.d12();
+
+        var batchRequest = {};
+
+        _.times(params.size, function() {
+            var opts = _.clone(params);
+            opts.endpoint = chance.pick([
+                '/users/' + chance.natural({max: 5000}) + '/name',
+                '/users/' + chance.natural({max: 5000}) + '/email',
+                '/users/' + chance.natural({max: 5000}) + '/company'
+            ]);
+
+            opts.method = params.method || chance.pick(methods);
+
+            opts.host = params.host || chance.domain();
+            opts.protocol = params.protocol || chance.pick(['http', 'https']);
+            opts.port = params.port || chance.pick([80, 3000, 4000, 5000]);
+
+            batchRequest[chance.word()] = {
+                url: _.template('${ protocol }://${ host }:${ port }${ endpoint }', opts),
+                method: opts.method
+            };
+        });
+        return batchRequest;
+    }
+});
 
 describe('validate', function() {
     describe('basic', function() {
@@ -35,7 +68,18 @@ describe('validate', function() {
     });
 
     describe('options', function() {
-        it('obeys the max option default at 100');
+        it('obeys the max option default at 20', function(done) {
+            var requestObject = chance.batchRequest({method: 'get', size: 25, host: 'localhost', port: 4000});
+            request(app)
+                .post('/batch')
+                .send(requestObject)
+                .expect(400, function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res.body.error).to.exist;
+                    expect(res.body.error.type).to.equal('ValidationError');
+                    done();
+                });
+        });
         it('obeys the localOnly option when set as true');
         it('obeys the httpsOnly option when set as true');
     });
