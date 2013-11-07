@@ -23,4 +23,4 @@ app.get('/users/:id/company', function(req, res) {
     res.json(chance.capitalize(chance.word()));
 });
 
-app.listen(4000);
+app.listen(3000);

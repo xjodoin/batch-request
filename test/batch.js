@@ -36,7 +36,7 @@ describe('batch', function() {
                 .post('/batch')
                 .send({
                     getName: {
-                        url: 'http://localhost:4000/users/1/name'
+                        url: 'http://localhost:3000/users/1/name'
                     }
                 })
                 .expect(200, function(err, res) {
@@ -53,13 +53,13 @@ describe('batch', function() {
                     .post('/batch')
                     .send({
                         getName: {
-                            url: 'http://localhost:4000/users/1/name'
+                            url: 'http://localhost:3000/users/1/name'
                         },
                         getEmail: {
-                            url: 'http://localhost:4000/users/1/email'
+                            url: 'http://localhost:3000/users/1/email'
                         },
                         getCompany: {
-                            url: 'http://localhost:4000/users/1/company'
+                            url: 'http://localhost:3000/users/1/company'
                         }
                     })
                     .expect(200, function(err, res) {
@@ -80,13 +80,13 @@ describe('batch', function() {
                     .post('/batch')
                     .send({
                         getName: {
-                            url: 'http://localhost:4000/users/1/name'
+                            url: 'http://localhost:3000/users/1/name'
                         },
                         getEmail: {
-                            url: 'http://localhost:4000/users/1/' + chance.word()
+                            url: 'http://localhost:3000/users/1/' + chance.word()
                         },
                         getCompany: {
-                            url: 'http://localhost:4000/users/1/company'
+                            url: 'http://localhost:3000/users/1/company'
                         }
                     })
                     .expect(200, function(err, res) {

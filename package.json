@@ -14,8 +14,7 @@
     "lodash": "~2.2.1",
     "validator": "~2.0.0",
     "request": "~2.27.0",
-    "methods": "~0.1.0",
-    "superagent": "~0.15.7"
+    "methods": "~0.1.0"
   },
   "devDependencies": {
     "chai": "~1.8.0",
