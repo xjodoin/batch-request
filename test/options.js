@@ -48,6 +48,7 @@ describe('options', function() {
     describe('max', function() {
 
         it('obeys default of 20', function(done) {
+            // First try a request that is over the max limit. Should throw 400 error
             request(app)
                 .post('/batch')
                 .send(chance.batchRequest({method: 'get', size: 21, host: 'localhost', port: 4000}))
@@ -56,18 +57,17 @@ describe('options', function() {
                     expect(res.body.error).to.exist;
                     expect(res.body.error.type).to.equal('ValidationError');
                     expect(res.body.error.message).to.equal('Over the max request limit. Please limit batches to 20 requests');
-                    done();
-                });
 
-            request(app)
-                .post('/batch')
-                .send(chance.batchRequest({method: 'get', size: 20, host: 'localhost', port: 4000}))
-                .expect(200, function(err, res) {
-                    expect(err).to.be.null;
-                    expect(res.body.error).to.not.exist;
-                    done();
+                    // Now let's try one that's right on the limit, it should pass.
+                    request(app)
+                        .post('/batch')
+                        .send(chance.batchRequest({method: 'get', size: 20, host: 'localhost', port: 4000}))
+                        .expect(200, function(err, res) {
+                            expect(err).to.be.null;
+                            expect(res.body.error).to.not.exist;
+                            done();
+                        });
                 });
-
         });
 
     });
