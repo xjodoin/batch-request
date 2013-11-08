@@ -3,7 +3,7 @@ Batch Request
 
 A simple library for batching HTTP requests
 
-[View Documentation](http://socialradar.github.io/batch-request/)
+[View Documentation](http://batch-request.socialradar.com)
 
 [![Build Status](https://travis-ci.org/socialradar/batch-request.png?branch=master)](https://travis-ci.org/socialradar/batch-request)
 
@@ -26,6 +26,6 @@ Optionally use our included middleware to check the validity of your batch reque
 
 And that's it!
 
-Proudly written by:
+Proudly written in Washington, D.C. by:
 
 [![SocialRadar](https://raw.github.com/socialradar/batch-request/master/social-radar-black-orange.png)](http://socialradar.com)
