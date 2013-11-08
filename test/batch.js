@@ -102,4 +102,128 @@ describe('batch', function() {
             });
         });
     });
+
+    describe('dependencies', function() {
+        it('will run multiple queries in parallel if no dependencies specified', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    time1: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time2: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time3: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    var now = new Date().getTime();
+                    expect(res.body.time1.body).to.be.within(now - 100, now + 100);
+                    expect(res.body.time2.body).to.be.within(now - 100, now + 100);
+                    expect(res.body.time3.body).to.be.within(now - 100, now + 100);
+                    done();
+                });
+
+        });
+
+        it('will run a dependency before its dependent', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    time1: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time2: {
+                        dependency: 'time1',
+                        url: 'http://localhost:3000/users/1/delay'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    var now = new Date().getTime();
+                    // Expect first one to finish within 
+                    expect(res.body.time1.body).to.be.within(now - 1000, now + 1000);
+                    expect(res.body.time2.body).to.be.above(res.body.time1.body + 500);
+                    done();
+                });
+
+        });
+
+        it('will run chained dependencies, in order', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    time1: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time2: {
+                        dependency: 'time1',
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time3: {
+                        dependency: 'time2',
+                        url: 'http://localhost:3000/users/1/delay'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    var now = new Date().getTime();
+                    expect(res.body.time1.body).to.be.within(now - 1100, now + 1100);
+                    expect(res.body.time2.body).to.be.above(res.body.time1.body + 999);
+                    expect(res.body.time3.body).to.be.above(res.body.time2.body + 999);
+                    done();
+                });
+
+        });
+
+        it('can run a rather complex chain of dependencies, in order', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    time1: {
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time2: {
+                        dependency: 'time1',
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time3: {
+                        dependency: 'time2',
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    },
+                    time4: {
+                        dependency: 'time1',
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time5: {
+                        dependency: 'time4',
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time6: {
+                        dependency: 'time4',
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time7: {
+                        dependency: 'time4',
+                        url: 'http://localhost:3000/users/1/delay'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    var now = new Date().getTime();
+                    expect(res.body.time1.body).to.be.within(now - 1100, now + 1100);
+                    expect(res.body.time2.body).to.be.above(res.body.time1.body + 999);
+                    expect(res.body.time3.body).to.be.above(res.body.time2.body + 999);
+                    expect(res.body.time4.body).to.be.above(res.body.time2.body + 999);
+                    expect(res.body.time5.body).to.be.above(res.body.time4.body + 999);
+                    expect(res.body.time6.body).to.be.above(res.body.time4.body + 999);
+                    expect(res.body.time7.body).to.be.above(res.body.time4.body + 999);
+                    done();
+                });
+
+        });
+    });
 });

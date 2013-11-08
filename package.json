@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "chai": "~1.8.0",
-    "chance": "~0.5.1",
+    "chance": "~0.5.3",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-jshint": "~0.6.4",

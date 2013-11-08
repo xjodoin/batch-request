@@ -23,4 +23,16 @@ app.get('/users/:id/company', function(req, res) {
     res.json(chance.capitalize(chance.word()));
 });
 
+app.get('/users/:id/hammertime', function(req, res) {
+    res.json(new Date().getTime());
+});
+
+app.get('/users/:id/delay', function(req, res, done) {
+    setTimeout(function() {
+        res.json(new Date().getTime());
+        done();
+    }, 250);
+});
+
+
 app.listen(3000);
