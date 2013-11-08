@@ -217,7 +217,7 @@ describe('batch', function() {
                     expect(res.body.time1.body).to.be.within(now - 1100, now + 1100);
                     expect(res.body.time2.body).to.be.above(res.body.time1.body + 999);
                     expect(res.body.time3.body).to.be.above(res.body.time2.body + 999);
-                    expect(res.body.time4.body).to.be.above(res.body.time2.body + 999);
+                    expect(res.body.time4.body).to.be.above(res.body.time1.body + 999);
                     expect(res.body.time5.body).to.be.above(res.body.time4.body + 999);
                     expect(res.body.time6.body).to.be.above(res.body.time4.body + 999);
                     expect(res.body.time7.body).to.be.above(res.body.time4.body + 999);
