@@ -51,7 +51,7 @@ describe('options', function() {
             // First try a request that is over the max limit. Should throw 400 error
             request(app)
                 .post('/batch')
-                .send(chance.batchRequest({method: 'get', size: 21, host: 'localhost', port: 4000}))
+                .send(chance.batchRequest({method: 'get', size: 21, host: 'localhost', port: 3000}))
                 .expect(400, function(err, res) {
                     expect(err).to.be.null;
                     expect(res.body.error).to.exist;
@@ -61,7 +61,7 @@ describe('options', function() {
                     // Now let's try one that's right on the limit, it should pass.
                     request(app)
                         .post('/batch')
-                        .send(chance.batchRequest({method: 'get', size: 20, host: 'localhost', port: 4000}))
+                        .send(chance.batchRequest({method: 'get', size: 20, host: 'localhost', port: 3000}))
                         .expect(200, function(err, res) {
                             expect(err).to.be.null;
                             expect(res.body.error).to.not.exist;
