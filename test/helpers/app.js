@@ -15,6 +15,22 @@ app.get('/users/:id/name', function(req, res) {
     res.json(chance.name());
 });
 
+app.post('/users/:id/name', function(req, res) {
+    res.json(chance.name());
+});
+
+app.post('/users/:id/deep', function(req, res) {
+    res.json({
+        email: chance.email(),
+        mixed: {
+            name: chance.name(),
+            deep: {
+                foo: 'bar'
+            }
+        }
+    });
+});
+
 app.get('/users/:id/email', function(req, res) {
     res.json(chance.email());
 });

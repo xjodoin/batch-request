@@ -47,6 +47,45 @@ describe('batch', function() {
                     done();
                 });
         });
+
+        it('will handle a POST correctly', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        method: 'POST',
+                        url: 'http://localhost:3000/users/1/name'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    done();
+                });
+        });
+
+        it('will handle deeply serialized objects on POST correctly', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        method: 'POST',
+                        url: 'http://localhost:3000/users/1/deep'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    var obj = JSON.parse(res.body.getName.body);
+                    expect(obj.mixed.deep.foo).to.equal('bar');
+                    done();
+                });
+        });
+
         describe('can handle multiple requests', function() {
             it('without a method', function(done) {
                 request(app)
