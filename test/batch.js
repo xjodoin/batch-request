@@ -86,6 +86,28 @@ describe('batch', function() {
                 });
         });
 
+        it('will send back headers', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        method: 'POST',
+                        url: 'http://localhost:3000/users/1/deep'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    console.log(res.body.getName);
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    expect(res.body.getName).to.have.property('headers');
+                    var obj = JSON.parse(res.body.getName.body);
+                    expect(obj.mixed.deep.foo).to.equal('bar');
+                    done();
+                });
+        });
+
         describe('can handle multiple requests', function() {
             it('without a method', function(done) {
                 request(app)
