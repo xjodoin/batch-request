@@ -97,7 +97,6 @@ describe('batch', function() {
                 })
                 .expect(200, function(err, res) {
                     expect(err).to.not.exist;
-                    console.log(res.body.getName);
                     expect(res.body).to.have.property('getName');
                     expect(res.body.getName.statusCode).to.equal(200);
                     expect(res.body.getName.body).to.be.a('string');
