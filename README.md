@@ -5,7 +5,7 @@ A simple library for batching HTTP requests
 
 [View Documentation](http://batch-request.socialradar.com)
 
-[![Build Status](https://travis-ci.org/socialradar/batch-request.png?branch=master)](https://travis-ci.org/socialradar/batch-request)
+[![Build Status](https://travis-ci.org/socialradar/batch-request.png?branch=master)](https://travis-ci.org/socialradar/batch-request) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ## QuickStart
 
