@@ -16,6 +16,16 @@ app.get('/users/:id/name', function(req, res) {
 });
 
 app.post('/users/:id/name', function(req, res) {
+    // If a first name is sent in, we will reflect it so we can test that it was
+    // received correctly.
+    if (req.body.first) {
+        res.json(req.body.first);
+    } else {
+        res.json(chance.name());
+    }
+});
+
+app.put('/users/:id/name', function(req, res) {
     res.json(chance.name());
 });
 
@@ -43,10 +53,10 @@ app.get('/users/:id/hammertime', function(req, res) {
     res.json(new Date().getTime());
 });
 
-app.get('/users/:id/delay', function(req, res, done) {
+app.get('/users/:id/delay', function(req, res, next) {
     setTimeout(function() {
         res.json(new Date().getTime());
-        done();
+        next();
     }, 250);
 });
 

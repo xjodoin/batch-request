@@ -66,6 +66,46 @@ describe('batch', function() {
                 });
         });
 
+        it('will handle a POST with a body correctly', function(done) {
+            var first = chance.first();
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        method: 'POST',
+                        body: { first: first },
+                        json: true,
+                        url: 'http://localhost:3000/users/1/name'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    expect(res.body.getName.body).to.equal(first);
+                    done();
+                });
+        });
+
+        it('will handle a PUT correctly', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        method: 'PUT',
+                        url: 'http://localhost:3000/users/1/name'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    done();
+                });
+        });
+
         it('will handle deeply serialized objects on POST correctly', function(done) {
             request(app)
                 .post('/batch')
