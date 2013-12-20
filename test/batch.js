@@ -234,19 +234,42 @@ describe('batch', function() {
                 .post('/batch')
                 .send({
                     time1: {
-                        url: 'http://localhost:3000/users/1/hammertime'
+                        url: 'http://localhost:3000/users/1/delay'
                     },
                     time2: {
                         dependency: 'time1',
-                        url: 'http://localhost:3000/users/1/delay'
+                        url: 'http://localhost:3000/users/1/hammertime'
                     }
                 })
                 .expect(200, function(err, res) {
                     expect(err).to.not.exist;
                     var now = new Date().getTime();
-                    // Expect first one to finish within 
+                    // Expect first one to finish within
                     expect(res.body.time1.body).to.be.within(now - 1000, now + 1000);
                     expect(res.body.time2.body).to.be.above(res.body.time1.body + 500);
+                    done();
+                });
+
+        });
+
+        it('will not choke on an empty string dependency', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    time1: {
+                        url: 'http://localhost:3000/users/1/delay'
+                    },
+                    time2: {
+                        dependency: '',
+                        url: 'http://localhost:3000/users/1/hammertime'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    var now = new Date().getTime();
+                    // Expect first one to finish within
+                    expect(res.body.time1.body).to.be.ok;
+                    expect(res.body.time2.body).to.be.ok;
                     done();
                 });
 
