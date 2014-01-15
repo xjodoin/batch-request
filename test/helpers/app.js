@@ -7,8 +7,10 @@ var express = require('express'),
 
 app.use(express.json());
 
-// An endpoint to use the batch middleware
+// A POST endpoint to use the batch middleware
 app.post('/batch', batch.validate, batch);
+// A GET endpoint to use the batch middleware
+app.get('/batch', batch.validate, batch);
 
 // Let's make some fake endpoints
 app.get('/users/:id/name', function(req, res) {

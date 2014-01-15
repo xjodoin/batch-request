@@ -83,5 +83,25 @@ describe('validate', function() {
                     done();
                 });
         });
+
+        it('rejects get requests with request bodies', function(done) {
+            request(app)
+                .get('/batch')
+                .send({
+                    getRequestWithBody: {
+                        method: 'get',
+                        url: 'http://localhost:4000/users/1/name',
+                        body: '{"foo":"bar"}'
+                    }
+                })
+                .expect(400, function(err, res) {
+                    expect(err).to.be.null;
+                    expect(res.body.error).to.exist;
+                    expect(res.body.error.type).to.equal('ValidationError');
+                    expect(res.body.error.message).to.equal('Request body not allowed for this method');
+                    expect(res.body.error.request).to.equal('getRequestWithBody');
+                    done();
+                });
+        });
     });
 });
