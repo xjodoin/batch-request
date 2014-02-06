@@ -10,6 +10,7 @@ var _ = require('lodash'),
     request = require('supertest');
 
 var app = require('./helpers/app');
+var appAllowed = require('./helpers/app-allowed');
 
 var batch = require('../lib/batch-request')();
 
@@ -43,8 +44,101 @@ describe('validate', function() {
                     expect(err).to.be.null;
                     expect(res.body.error).to.exist;
                     expect(res.body.error.message).to.equal('Cannot make a batch request with an empty request object');
-                    done();
+                    done(err);
                 });
+        });
+    });
+
+    describe('options', function() {
+        describe('allowed hosts', function() {
+            it('will accept an allowed hosts parameter', function() {
+                expect(require('../lib/batch-request')({
+                    allowedHosts: [
+                        chance.domain(),
+                        chance.domain()
+                    ]
+                })).to.be.ok;
+            });
+
+            it('will return a validation error if allowed hosts set and request url not allowed', function(done) {
+                // Note, for the appAllowed app, the allowedHosts parameter contains "socialradar.com" and that's it.
+                request(appAllowed)
+                    .post('/batch')
+                    .send({
+                        disallowedUrl: {
+                            url: 'http://www.google.com'
+                        }
+                    })
+                    .expect(400, function(err, res) {
+                        expect(res.body.error).to.exist;
+                        expect(res.body.error.host).to.equal('www.google.com');
+                        done(err);
+                    });
+            });
+
+            it('will return a validation error if allowed hosts set and one request url not allowed', function(done) {
+                request(appAllowed)
+                    .post('/batch')
+                    .send({
+                        allowedUrl1: {
+                            url: 'http://socialradar.com/developers'
+                        },
+                        allowedUrl2: {
+                            url: 'http://socialradar.com/about'
+                        },
+                        disallowedUrl: {
+                            url: 'http://www.google.com'
+                        }
+                    })
+                    .expect(400, function(err, res) {
+                        expect(res.body.error).to.exist;
+                        expect(res.body.error.host).to.equal('www.google.com');
+                        done(err);
+                    });
+            });
+
+            it('will not return a validation error if all requests are to allowed', function(done) {
+                request(appAllowed)
+                    .post('/batch')
+                    .send({
+                        allowedUrl1: {
+                            url: 'http://socialradar.com/developers'
+                        },
+                        allowedUrl2: {
+                            url: 'http://socialradar.com/about'
+                        },
+                        allowedUrl3: {
+                            url: 'http://socialradar.com/product'
+                        }
+                    })
+                    .expect(200, function(err, res) {
+                        expect(res.body.error).to.not.exist;
+                        done(err);
+                    });
+            });
+
+            it('will accept localhost as an allowedHost and obey it', function(done) {
+                request(appAllowed)
+                    .post('/batch')
+                    .send({
+                        allowedUrl1: {
+                            url: 'http://socialradar.com/developers'
+                        },
+                        allowedUrl2: {
+                            url: 'http://socialradar.com/about'
+                        },
+                        allowedUrl3: {
+                            url: 'http://socialradar.com/product'
+                        },
+                        testingLocalhost: {
+                            url: 'http://localhost:3001/users/test/name'
+                        }
+                    })
+                    .expect(200, function(err, res) {
+                        expect(res.body.error).to.not.exist;
+                        done(err);
+                    });
+            });
         });
     });
 
