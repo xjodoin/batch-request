@@ -16,13 +16,13 @@ Download via [NPM](http://npmjs.org)
 then in your app
 
     // Use Batch Request as middleware on an endpoint you want to service batch requests
-    app.get('/batch', batch);
+    app.post('/batch', batch);
 
 
 Optionally use our included middleware to check the validity of your batch request
 
     // Include the batch.validate middleware before batch middleware
-    app.get('/batch', batch.validate, batch);
+    app.post('/batch', batch.validate, batch);
 
 And that's it!
 
